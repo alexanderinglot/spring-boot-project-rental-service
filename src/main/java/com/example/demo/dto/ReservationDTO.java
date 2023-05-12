@@ -1,24 +1,14 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.Lessee;
-import com.example.demo.entity.PlaceForRent;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class ReservationDTO {
 
     private Long id;
-
     private Long lesseeId;
-
     private Long placeForRentId;
-
     private LocalDate startDate;
-
     private LocalDate endDate;
-
     private int leaseTerm;
     private double cost;
 

@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.LesseeDTO;
-import com.example.demo.dto.LessorDTO;
 import com.example.demo.dto.ReservationDTO;
 import com.example.demo.entity.Lessee;
-import com.example.demo.entity.Lessor;
 import com.example.demo.entity.PlaceForRent;
 import com.example.demo.entity.Reservation;
 import com.example.demo.exceptions.ReservationAlreadyExistsException;
@@ -14,13 +11,9 @@ import com.example.demo.repository.PlaceForRentRepository;
 import com.example.demo.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.*;
-
-import java.util.List;
 
 @Service
 public class RentingService {
@@ -72,7 +65,6 @@ public class RentingService {
     }
 
 
-
     private Reservation convertReservationDTOtoEntity(ReservationDTO reservationDTO) {
         Optional<Lessee> foundLessee = lesseeRepository.findById(reservationDTO.getLesseeId());
 
@@ -86,23 +78,21 @@ public class RentingService {
             throw new RuntimeException(); //TODO exception + mapping
         }
 
-        Reservation reservation = new Reservation(null, foundLessee.get(), foundPlaceForRent.get(), reservationDTO.getStartDate(), reservationDTO.getEndDate(), calculateCost());
+        Reservation reservation = new Reservation(null, foundLessee.get(), foundPlaceForRent.get(), reservationDTO.getStartDate(), reservationDTO.getEndDate(), calculateCost(reservationDTO));
 
         return reservation;
     }
 
-    private double calculateCost() {
-        //TODO
-        return 10;
+    private double calculateCost(ReservationDTO reservationDTO) {
+        Optional<PlaceForRent> foundPlaceForRent = placeForRentRepository.findById(reservationDTO.getPlaceForRentId());
+        PlaceForRent placeForRent = null;
+
+        if (foundPlaceForRent.isPresent()) {
+            placeForRent = foundPlaceForRent.get();
+        }
+
+        return reservationDTO.getLeaseTerm() * placeForRent.getUnitPrice();
     }
-
-
-
-
-
-
-
-
 
     /*public List<LessorDTO> getAllLessors() {
         return lessorRepository.findAll()
@@ -120,5 +110,4 @@ public class RentingService {
 
         return lessorDTO;
     }*/
-    //dupaa
 }

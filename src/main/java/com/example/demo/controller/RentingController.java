@@ -1,13 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.LessorDTO;
 import com.example.demo.dto.ReservationDTO;
 import com.example.demo.entity.Reservation;
 import com.example.demo.service.RentingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -33,11 +31,9 @@ public class RentingController {
 
         if (lessorId != null) {
             return rentingService.getReservationsByLesseeId(lessorId);
-        }
-        else if (placeForRentId != null) {
+        } else if (placeForRentId != null) {
             return rentingService.getReservationsByPlaceForRentId(placeForRentId);
-        }
-        else {
+        } else {
             return Set.of(); //TODO
         }
     }

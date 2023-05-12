@@ -14,11 +14,11 @@ public class PlaceForRent {
     private double area;
     private double unitPrice;
 
-    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "lessor_id")
     private Lessor lessor;
 
-    @OneToMany(mappedBy = "placeForRent", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @OneToMany(mappedBy = "placeForRent", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Reservation> reservations;
 
     private String description;
@@ -45,7 +45,9 @@ public class PlaceForRent {
         this.id = id;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -82,7 +84,7 @@ public class PlaceForRent {
     public void setDescription(String description) {
         this.description = description;
     }
-2
+
     public Set<Reservation> getReservations() {
         return reservations;
     }
