@@ -50,6 +50,11 @@ public class RentingService {
         if (existingReservation.isEmpty())
             throw new ReservationNotFoundException("Reservation id not found - " + reservation.getId());
 
+        Set<Reservation> existingReservations = reservationRepository.findExistingReservation(reservation.getStartDate(), reservation.getEndDate(), reservation.getPlaceForRentId());
+
+        if (existingReservations.size() > 1)
+            throw new ReservationAlreadyExistsException("This place is already booked in given period - please select another date");
+
         Reservation save = reservationRepository.save(convertReservationDTOtoEntity(reservation));
 
         return convertReservationEntityToDTO(save);
