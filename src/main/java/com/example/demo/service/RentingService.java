@@ -90,6 +90,15 @@ public class RentingService {
         return reservationDTOS;
     }
 
+    public void deleteReservationById(Long reservationId) {
+        Optional<Reservation> reservationToDelete = reservationRepository.findById(reservationId);
+
+        if (reservationToDelete.isEmpty())
+            throw new ReservationNotFoundException("Reservation id not found - " + reservationId);
+
+        reservationRepository.deleteById(reservationId);
+    }
+
     private Reservation convertReservationDTOtoEntity(ReservationDTO reservationDTO) {
         Optional<Lessor> foundLessor = lessorRepository.findById(reservationDTO.getLessorId());
         Optional<Lessee> foundLessee = lesseeRepository.findById(reservationDTO.getLesseeId());
@@ -109,7 +118,7 @@ public class RentingService {
     }
 
     private ReservationDTO convertReservationEntityToDTO(Reservation reservation) {
-        return new ReservationDTO(reservation.getId(), reservation.getLessee().getId(), reservation.getLessor().getId(), reservation.getPlaceForRent().getId(), reservation.getStartDate(), reservation.getEndDate(), ChronoUnit.DAYS.between(reservation.getEndDate(), reservation.getStartDate()), reservation.getCost());
+        return new ReservationDTO(reservation.getId(), reservation.getLessee().getId(), reservation.getLessor().getId(), reservation.getPlaceForRent().getId(), reservation.getStartDate(), reservation.getEndDate(), ChronoUnit.DAYS.between(reservation.getStartDate(), reservation.getEndDate()), reservation.getCost());
     }
 
     private double calculateCost(ReservationDTO reservationDTO) {
@@ -119,6 +128,6 @@ public class RentingService {
         if (foundPlaceForRent.isPresent())
             placeForRent = foundPlaceForRent.get();
 
-        return placeForRent != null ? reservationDTO.getLeaseTerm() * placeForRent.getUnitPrice() * placeForRent.getArea() : 0.0;
+        return placeForRent != null ? ChronoUnit.DAYS.between(reservationDTO.getStartDate(), reservationDTO.getEndDate()) * placeForRent.getUnitPrice() * placeForRent.getArea() : 0.0;
     }
 }

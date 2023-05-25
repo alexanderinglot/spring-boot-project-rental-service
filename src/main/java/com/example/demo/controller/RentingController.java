@@ -9,23 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/reservations")
 public class RentingController {
 
     @Autowired
     private RentingService rentingService;
 
-    @PostMapping("/reservations")
-    public ReservationDTO addReservation(@RequestBody ReservationDTO reservationDTO) {
-        return rentingService.addReservation(reservationDTO);
-    }
-
-    @PutMapping("/reservations")
-    public ReservationDTO updateReservation(@RequestBody ReservationDTO reservationDTO) {
-        return rentingService.updateReservation(reservationDTO);
-    }
-
-    @GetMapping("/reservations")
+    @GetMapping
     public Set<ReservationDTO> getReservationsByParam(@RequestParam(required = false) Long lessorId, @RequestParam(required = false) Long placeForRentId) throws Exception {
         if (lessorId != null)
             return rentingService.getReservationsByLessorId(lessorId);
@@ -33,5 +23,20 @@ public class RentingController {
             return rentingService.getReservationsByPlaceForRentId(placeForRentId);
         else
             throw new Exception("Provided parameter is not correct");
+    }
+
+    @PostMapping
+    public ReservationDTO addReservation(@RequestBody ReservationDTO reservationDTO) {
+        return rentingService.addReservation(reservationDTO);
+    }
+
+    @PutMapping
+    public ReservationDTO updateReservation(@RequestBody ReservationDTO reservationDTO) {
+        return rentingService.updateReservation(reservationDTO);
+    }
+
+    @DeleteMapping
+    public void deleteReservationById(@RequestParam Long reservationId) {
+        rentingService.deleteReservationById(reservationId);
     }
 }

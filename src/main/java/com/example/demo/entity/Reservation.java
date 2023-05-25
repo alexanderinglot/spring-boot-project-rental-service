@@ -42,13 +42,9 @@ public class Reservation {
         this.cost = cost;
     }
 
-    public Lessor getLessor() {
-        return lessor;
-    }
+    public Lessor getLessor() { return lessor; }
 
-    public void setLessor(Lessor lessor) {
-        this.lessor = lessor;
-    }
+    public void setLessor(Lessor lessor) { this.lessor = lessor; }
 
     public Long getId() {
         return id;
