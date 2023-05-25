@@ -12,6 +12,10 @@ public class Reservation {
     private Long id;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "lessor_id")
+    private Lessor lessor;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "lessee_id")
     private Lessee lessee;
 
@@ -28,13 +32,22 @@ public class Reservation {
 
     }
 
-    public Reservation(Long id, Lessee lessee, PlaceForRent placeForRent, LocalDate startDate, LocalDate endDate, double cost) {
+    public Reservation(Long id, Lessor lessor, Lessee lessee, PlaceForRent placeForRent, LocalDate startDate, LocalDate endDate, double cost) {
         this.id = id;
+        this.lessor = lessor;
         this.lessee = lessee;
         this.placeForRent = placeForRent;
         this.startDate = startDate;
         this.endDate = endDate;
         this.cost = cost;
+    }
+
+    public Lessor getLessor() {
+        return lessor;
+    }
+
+    public void setLessor(Lessor lessor) {
+        this.lessor = lessor;
     }
 
     public Long getId() {

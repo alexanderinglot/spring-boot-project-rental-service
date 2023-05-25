@@ -6,24 +6,43 @@ public class ReservationDTO {
 
     private Long id;
     private Long lesseeId;
+    private Long lessorId;
     private Long placeForRentId;
     private LocalDate startDate;
     private LocalDate endDate;
-    private int leaseTerm;
+    private long leaseTerm;
     private double cost;
 
     public ReservationDTO() {
 
     }
 
-    public ReservationDTO(Long id, Long lesseeId, Long placeForRentId, LocalDate startDate, LocalDate endDate, int leaseTerm, double cost) {
+    public ReservationDTO(Long id, Long lesseeId, Long lessorId, Long placeForRentId, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.lesseeId = lesseeId;
+        this.lessorId = lessorId;
+        this.placeForRentId = placeForRentId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public ReservationDTO(Long id, Long lesseeId, Long lessorId, Long placeForRentId, LocalDate startDate, LocalDate endDate, long leaseTerm, double cost) {
+        this.id = id;
+        this.lesseeId = lesseeId;
+        this.lessorId = lessorId;
         this.placeForRentId = placeForRentId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.leaseTerm = leaseTerm;
         this.cost = cost;
+    }
+
+    public Long getLessorId() {
+        return lessorId;
+    }
+
+    public void setLessorId(Long lessorId) {
+        this.lessorId = lessorId;
     }
 
     public Long getId() {
@@ -66,11 +85,11 @@ public class ReservationDTO {
         this.endDate = endDate;
     }
 
-    public int getLeaseTerm() {
+    public long getLeaseTerm() {
         return leaseTerm;
     }
 
-    public void setLeaseTerm(int leaseTerm) {
+    public void setLeaseTerm(long leaseTerm) {
         this.leaseTerm = leaseTerm;
     }
 

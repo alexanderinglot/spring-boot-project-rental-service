@@ -9,32 +9,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping("/api")
 public class RentingController {
 
     @Autowired
     private RentingService rentingService;
 
-    //TODO - return DTO + id!
-    @PostMapping
-    public Reservation addReservation(@RequestBody ReservationDTO reservationDTO) {
+    @PostMapping("/reservations")
+    public ReservationDTO addReservation(@RequestBody ReservationDTO reservationDTO) {
         return rentingService.addReservation(reservationDTO);
     }
 
-    @PutMapping
-    public Reservation updateReservation(@RequestBody ReservationDTO reservationDTO) {
+    @PutMapping("/reservations")
+    public ReservationDTO updateReservation(@RequestBody ReservationDTO reservationDTO) {
         return rentingService.updateReservation(reservationDTO);
     }
 
-    @GetMapping
-    public Set<Reservation> getReservationsByParam(@RequestParam Long lessorId, @RequestParam Long placeForRentId) {
-
-        if (lessorId != null) {
-            return rentingService.getReservationsByLesseeId(lessorId);
-        } else if (placeForRentId != null) {
+    @GetMapping("/reservations")
+    public Set<ReservationDTO> getReservationsByParam(@RequestParam(required = false) Long lessorId, @RequestParam(required = false) Long placeForRentId) throws Exception {
+        if (lessorId != null)
+            return rentingService.getReservationsByLessorId(lessorId);
+        else if (placeForRentId != null)
             return rentingService.getReservationsByPlaceForRentId(placeForRentId);
-        } else {
-            return Set.of(); //TODO
-        }
+        else
+            throw new Exception("Provided parameter is not correct");
     }
 }
