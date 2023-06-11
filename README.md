@@ -41,7 +41,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Screenshots
 
-![screenshot](https://github.com/alexanderinglot/spring-boot-project-rental-service/blob/master/src/main/resources/Zrzut%20ekranu%202023-06-11%20112434.png))
+![screenshot](https://github.com/alexanderinglot/spring-boot-project-rental-service/blob/master/src/main/resources/Zrzut%20ekranu%202023-06-11%20112434.png)
 
 ## License
 
